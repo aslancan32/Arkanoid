@@ -36,6 +36,8 @@ $(document).ready(function(){
         fill: '#FF7A4D'
     });
 
+    createBrick(300,240);
+
     setInterval(function(){
 
         ball.attr({cx:ballX, cy:ballY}); // svg obsejesinin attribute degerlerini degistirir.
@@ -50,6 +52,10 @@ $(document).ready(function(){
             pathY*=-1;
         }
         
+        if (ballY == 690 && (ballX > bowX - 10 && ballX < bowX +250)) {
+            
+            pathY*=-1;
+        }
 
     },10);
 
@@ -78,5 +84,17 @@ $(document).ready(function(){
             }
         
     });
-    //console.log(top)
+
+    var brick;
+
+    function createBrick(x,y){
+
+        brick=svg.rect({
+            x:x,
+            y:y,
+            width:70,height:35,
+            fill:'#ff2121'
+        });
+    }
+    //console.log(top);
 })
