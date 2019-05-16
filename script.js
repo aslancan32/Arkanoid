@@ -25,6 +25,16 @@ $(document).ready(function(){
     var pathX=path[Math.floor(Math.random()*2)];
     var pathY=path[Math.floor(Math.random()*2)];
 
+    var bow;
+    var bowX=500;
+    var bowY=700;
+
+    bow=svg.rect({
+        x:bowX,
+        y:bowY,
+        width: 240,height: 40,
+        fill: '#FF7A4D'
+    });
 
     setInterval(function(){
 
@@ -43,5 +53,15 @@ $(document).ready(function(){
 
     },10);
 
+    $(document).mousemove(function(event){
+        bowX=e.clientX;
+    });
+    
+    $(document).keydown(function(event){
+
+        var code = event.which;
+        console.log(code);
+        
+    });
     //console.log(top)
 })
