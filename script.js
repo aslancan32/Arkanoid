@@ -54,13 +54,28 @@ $(document).ready(function(){
     },10);
 
     $(document).mousemove(function(event){
-        bowX=e.clientX;
+        bowX=event.clientX;
+        if(bowX<860)
+            bow.attr({x:bowX});
     });
     
     $(document).keydown(function(event){
 
         var code = event.which;
-        console.log(code);
+
+            if (code==37) {
+                
+                if(bowX>10)
+                    bowX-=10;
+                    bow.attr({x:bowX});
+            }
+        
+            if (code==39) {
+
+                if(bowX<860)
+                    bowX+=10;
+                    bow.attr({x:bowX});
+            }
         
     });
     //console.log(top)
