@@ -15,9 +15,16 @@ $(document).ready(function(){
         fill:'#060'
     });
 
-    var pathX=-1;
-    var pathY=-1;
-    var x;
+    var borderXStart=0;
+    var borderXEnd=1100;
+    var borderYStart=0;
+    var borderYEnd=750;
+
+
+    var path= [-1,1]
+    var pathX=path[Math.floor(Math.random()*2)];
+    var pathY=path[Math.floor(Math.random()*2)];
+
 
     setInterval(function(){
 
@@ -26,9 +33,15 @@ $(document).ready(function(){
         ballX+=pathX;
         ballY+=pathY;
 
+        if(ballX <= borderXStart +10 || ballX >= borderXEnd-5){
+            pathX*=-1;
+        }
+        if(ballY <= borderYStart +10 || ballY >= borderYEnd-10){
+            pathY*=-1;
+        }
         
 
-    },20);
+    },10);
 
     //console.log(top)
 })
