@@ -38,23 +38,38 @@ $(document).ready(function(){
 
     createBrick(300,240);
 
+    var power=1;
+
     setInterval(function(){
 
         ball.attr({cx:ballX, cy:ballY}); // svg obsejesinin attribute degerlerini degistirir.
         
-        ballX+=pathX;
-        ballY+=pathY;
+        ballX += pathX;
+        ballY += pathY;
 
         if(ballX <= borderXStart +10 || ballX >= borderXEnd-5){
-            pathX*=-1;
+            pathX *= -1;
         }
         if(ballY <= borderYStart +10 || ballY >= borderYEnd-10){
-            pathY*=-1;
+            pathY *= -1;
         }
         
         if (ballY == 690 && (ballX > bowX - 10 && ballX < bowX +250)) {
             
-            pathY*=-1;
+            pathY *= -1;
+        }
+
+        if((power>0)&&(ballY == 285 && (ballX > 290 && ballX < 395)) || (ballY == 240 && (ballX > 290 && ballX < 395))){
+            
+            pathY *= -1;
+            brick.remove();
+            power -= -1;
+        }
+
+        if ((power>0)&&((ballX == 290 && (ballY > 240 && topY < 285))) || (ballX == 395 && (ballY > 240 && topY < 285)))  {
+            pathX *= -1;
+            brick.remove();
+            power -= -1;
         }
 
     },10);
@@ -89,7 +104,7 @@ $(document).ready(function(){
 
     function createBrick(x,y){
 
-        brick=svg.rect({
+        brick = svg.rect({
             x:x,
             y:y,
             width:70,height:35,
