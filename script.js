@@ -36,9 +36,22 @@ $(document).ready(function(){
         fill: '#FF7A4D'
     });
 
-    createBrick(300,240);
-
+    var w=70 ;
+    var h =35  ;
     var power=1;
+    var brickArray= new Array();
+
+    for (var brickY = 50; brickY < 350 ; brickY+=45) {
+        for(var brickX=35; brickX<1065; brickX += 105){
+
+            var drawBrick = Math.floor(Math.random()*2);
+            if (drawBrick == 1)
+                createBrick(brickX,brickY);
+        }
+        
+    }
+
+    
 
     setInterval(function(){
 
@@ -59,20 +72,37 @@ $(document).ready(function(){
             pathY *= -1;
         }
 
-        if((power>0)&&(ballY == 285 && (ballX > 290 && ballX < 395)) || (ballY == 240 && (ballX > 290 && ballX < 395))){
+        // if((power>0)&&(ballY == 285 && (ballX > 290 && ballX < 395)) || (ballY == 240 && (ballX > 290 && ballX < 395))){
             
-            pathY *= -1;
-            brick.remove();
-            power -= -1;
-        }
+        //     pathY *= -1;
+        //     virtualBrick.remove();
+        //     power -= -1;
+        // }
 
-        if ((power>0)&&((ballX == 290 && (ballY > 240 && topY < 285))) || (ballX == 395 && (ballY > 240 && topY < 285)))  {
-            pathX *= -1;
-            brick.remove();
-            power -= -1;
-        }
+        // if ((power>0)&&((ballX == 290 && (ballY > 240 && topY < 285))) || (ballX == 395 && (ballY > 240 && topY < 285)))  {
+        //     pathX *= -1;
+        //     virtualBrick.remove();
+        //     power -= -1;
+        // }
+        for(var i=0; i < brickArray.length; i++){
 
-    },10);
+            
+            
+
+            if((brickArray[i].power>0) && ((ballY==brickArray[i].y+h+ballR && (ballX>brickArray[i].x-ballR && ballX<brickArray[i].x+w+ballR))||(ballY==brickArray[i].y-ballR && (ballX>brickArray[i].x-ballR && ballX<brickArray[i].x+w+ballR)))){
+                
+                brickArray[i].power=0;
+                brickArray[i].virtualBrick.remove();
+                pathY=pathY*-1;
+            }
+
+            if ((brickArray[i].power>0) && ((ballX==brickArray[i].x-ballR && (ballY>brickArray[i].y-ballR && ballY<brickArray[i].y+h+ballR))||(ballX==brickArray[i].x+w+ballR && (ballY>brickArray[i].y-ballR && ballY<brickArray[i].y+h+ballR)))){
+                brickArray[i].power=0;
+                brickArray[i].virtualBrick.remove();
+                pathY=pathX*-1;
+            }
+        }    
+    },2);
 
     $(document).mousemove(function(event){
         bowX=event.clientX;
@@ -97,19 +127,23 @@ $(document).ready(function(){
                     bowX+=10;
                     bow.attr({x:bowX});
             }
-        
     });
 
-    var brick;
+    function createBrick(brickX,brickY){
 
-    function createBrick(x,y){
-
-        brick = svg.rect({
-            x:x,
-            y:y,
-            width:70,height:35,
+        var virtualBrick = svg.rect({
+            x:brickX,
+            y:brickY,
+            width:w,height:h,
             fill:'#ff2121'
         });
+
+        var brick = {
+            x:brickX,
+            y:brickY,
+            power:1,
+            virtualBrick:virtualBrick
+        };
+        brickArray.push(brick);   
     }
-    //console.log(top);
 })
